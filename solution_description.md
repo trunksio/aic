@@ -17,4 +17,4 @@
 
 ## Proposed Solution Architecture
 
-![Proposed Solution Architecture](as_is_CES_architecture.png)
+![Proposed Solution Architecture](aic_impact_architecture.png)
