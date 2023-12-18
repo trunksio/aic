@@ -12,19 +12,25 @@ with Diagram("Container diagram for Augmented Intelligent Client for Impacting",
         jira = Container(
             name="JIRA",
             technology="Issue & Project Tracking",
-            description="Platform where the business user submits a request for change.",
+            description="Platform where the business user submits a request for change and where the proposal is stored.",
         )
  
         ba_agent = Container(
             name="BA Agent",
-            technology="GPT-based Language Model",
+            technology="External GPT System",
             description="Autonomous agent acting as a BA, reviews the request and asks supplementary questions if required.",
         )
  
         solution_agent = Container(
             name="Solution Agent",
-            technology="GPT-based Language Model & RAG-based Vector Store",
+            technology="External GPT System & RAG-based Vector Store",
             description="Produces a solution and a full description, including proposed technologies and estimate of cost.",
+        )
+
+        intelligent_client_architect = Container(
+            name="Intelligent Client Architect",
+            technology="Human",
+            description="Reviews the proposal before it is returned to the business user.",
         )
  
     business_user >> Relationship("Submits request for change [HTTPS]") >> jira
@@ -32,4 +38,6 @@ with Diagram("Container diagram for Augmented Intelligent Client for Impacting",
     ba_agent >> Relationship("Reviews and asks questions [API]") >> jira
     jira >> Relationship("Provides details [API]") >> solution_agent
     solution_agent >> Relationship("Produces solution [API]") >> jira
+    jira >> Relationship("Submits proposal [API]") >> intelligent_client_architect
+    intelligent_client_architect >> Relationship("Reviews proposal [API]") >> jira
     business_user << Relationship("Receives solution [HTTPS]") << jira
